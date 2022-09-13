@@ -13,7 +13,7 @@ import (
 
 	"github.com/jacobsa/go-serial/serial"
 
-	"github.com/denautonomepirat/dynamixel/config"
+	"github.com/ArT-Programming/dynamixelBridge/config"
 	"github.com/hypebeast/go-osc/osc"
 )
 
@@ -24,7 +24,12 @@ func main() {
 	//Load conf
 	c := &config.Config{}
 
-	c.GetConfig()
+	_, err := c.GetConfig("default.yaml")
+
+	if err != nil {
+		fmt.Printf("Configuration error: %s\n", err)
+		os.Exit(1)
+	}
 
 	options := serial.OpenOptions{
 		PortName:              c.Serial,
@@ -37,7 +42,7 @@ func main() {
 
 	serial, err := serial.Open(options)
 	if err != nil {
-		fmt.Printf("open error: %s\n", err)
+		fmt.Printf("Serial open error: %s\n", err)
 		os.Exit(1)
 	}
 
@@ -84,7 +89,7 @@ func main() {
 				case *osc.Message:
 					s := strings.Split(fmt.Sprint(packet.(*osc.Message)), ",")
 					message := strings.Split(s[0], "/")
-					fmt.Print(message)
+					fmt.Print(message[2])
 
 					data := strings.Split(s[1], " ")
 

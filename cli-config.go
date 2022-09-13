@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/denautonomepirat/dynamixel/config"
+	"github.com/ArT-Programming/dynamixelBridge/config"
 )
 
 func main() {
