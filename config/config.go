@@ -3,18 +3,22 @@ package config
 import (
 	//"github.com/adammck/dynamixel/servo"
 
+	"io/ioutil"
+
+	"github.com/adammck/dynamixel/servo"
 	"gopkg.in/AlecAivazis/survey.v1"
 	"gopkg.in/yaml.v2"
-	"io/ioutil"
 )
 
 type Config struct {
-	Path   string   `json:"path",yaml:"path"`
-	Port   string   `json:"port",yaml:"port"`
-	Serial string   `json:"serial",yaml:"serial"`
-	Servos []*Servo `json:"servos",yaml:"servos"`
+	Path              string   `json:"path",yaml:"path"`
+	Port              string   `json:"port",yaml:"port"`
+	Serial            string   `json:"serial",yaml:"serial"`
+	Servos            []*Servo `json:"servos",yaml:"servos"`
+	StatusReturnLevel int      `json:"statusreturnlevel",yaml:"statusreturnlevel"`
 }
 type Servo struct {
+	Servo                   *servo.Servo
 	Path                    string `json:"path",yaml:"path"`
 	ServoID                 int    `json:"servoid",yaml:"servoid"`
 	Baudrate                int    `json:"baudrate",yaml:"baudrate"`

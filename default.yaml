@@ -1,6 +1,7 @@
 path: /Robot
 port: "8765"
 serial: COM5
+statusreturnlevel: 0
 servos:
 - path: /toe
   servoid: 1

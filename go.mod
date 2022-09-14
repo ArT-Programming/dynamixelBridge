@@ -1,9 +1,8 @@
-module dynamixelBridge.go
+module github.com/ArT-Programming/dynamixelBridge
 
 go 1.19
 
 require (
-	github.com/ArT-Programming/dynamixelBridge v0.0.0-20180323101550-3348c0879312
 	github.com/adammck/dynamixel v0.0.0-20161216025924-be9965cfd640
 	github.com/hypebeast/go-osc v0.0.0-20220308234300-cec5a8a1e5f5
 	github.com/jacobsa/go-serial v0.0.0-20180131005756-15cf729a72d4

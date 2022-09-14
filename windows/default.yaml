@@ -1,0 +1,67 @@
+path: /Robot
+port: "8765"
+serial: COM5
+statusreturnlevel: 0
+servos:
+- path: /toe
+  servoid: 1
+  baudrate: 0
+  returndelaytime: 0
+  cwanglelimit: 1023
+  ccwanglelimit: 0
+  highestlimittemperature: 70
+  lowestlimitvoltage: 60
+  highestlimitvoltage: 0
+  maxtorque: 0
+  statusreturnlevel: 0
+  alarmled: 0
+  alarmshutdown: 0
+  torqueenable: 0
+  led: 0
+  cwcompliancemargin: 0
+  ccwcompliancemargin: 0
+  cwcomplianceslope: 0
+  ccwcomplianceslope: 0
+  goalposition: 0
+  movingspeed: 0
+  torquelimit: 0
+  presentposition: 0
+  presentspeed: 0
+  presentload: 0
+  presentvoltage: 0
+  presenttemperature: 0
+  registeredinstruction: 0
+  moving: 0
+  lock: 0
+  punch: 0
+- path: /nail
+  servoid: 2
+  baudrate: 0
+  returndelaytime: 0
+  cwanglelimit: 1023
+  ccwanglelimit: 0
+  highestlimittemperature: 70
+  lowestlimitvoltage: 60
+  highestlimitvoltage: 0
+  maxtorque: 0
+  statusreturnlevel: 0
+  alarmled: 0
+  alarmshutdown: 0
+  torqueenable: 0
+  led: 0
+  cwcompliancemargin: 0
+  ccwcompliancemargin: 0
+  cwcomplianceslope: 0
+  ccwcomplianceslope: 0
+  goalposition: 0
+  movingspeed: 0
+  torquelimit: 0
+  presentposition: 0
+  presentspeed: 0
+  presentload: 0
+  presentvoltage: 0
+  presenttemperature: 0
+  registeredinstruction: 0
+  moving: 0
+  lock: 0
+  punch: 0

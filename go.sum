@@ -1,6 +1,4 @@
 github.com/AlecAivazis/survey/v2 v2.0.5/go.mod h1:WYBhg6f0y/fNYUuesWQc0PKbJcEliGcYHB9sNT3Bg74=
-github.com/ArT-Programming/dynamixelBridge v0.0.0-20180323101550-3348c0879312 h1:6UocUYd4SZBfICdBR76qadxOu0z8AOOUztjC4ejQs6w=
-github.com/ArT-Programming/dynamixelBridge v0.0.0-20180323101550-3348c0879312/go.mod h1:aO4/ycnlHbBqwrWJaB/56EL1f5rYV1sYTnoFna++mN0=
 github.com/Netflix/go-expect v0.0.0-20180615182759-c93bf25de8e8 h1:xzYJEypr/85nBpB11F9br+3HUrpgb+fcm5iADzXXYEw=
 github.com/Netflix/go-expect v0.0.0-20180615182759-c93bf25de8e8/go.mod h1:oX5x61PbNXchhh0oikYAH+4Pcfw5LKv21+Jnpr6r6Pc=
 github.com/adammck/dynamixel v0.0.0-20161216025924-be9965cfd640 h1:8+jyUeHwwuBUXdxBoowvUrCHz7tvz4XnT5GXS+szRDQ=

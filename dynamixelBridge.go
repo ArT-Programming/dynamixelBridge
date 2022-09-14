@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/adammck/dynamixel/network"
+	"github.com/adammck/dynamixel/servo"
 	"github.com/adammck/dynamixel/servo/ax"
 
 	"github.com/jacobsa/go-serial/serial"
@@ -17,10 +18,14 @@ import (
 	"github.com/hypebeast/go-osc/osc"
 )
 
+type servoax interface {
+	SetGoalPosition(int) error
+}
+
 func main() {
 
-	fmt.Println("### Welcome to go-osc receiver demo")
-	fmt.Println("Press \"q\" to exit")
+	fmt.Println("Starting dynamixelBridge")
+	fmt.Println("Press \"q\" [Enter] to exit")
 	//Load conf
 	c := &config.Config{}
 
@@ -30,6 +35,8 @@ func main() {
 		fmt.Printf("Configuration error: %s\n", err)
 		os.Exit(1)
 	}
+	fmt.Printf("Setting Status return Level: %b\n", c.StatusReturnLevel)
+	fmt.Printf("Using serial port: %s\n", c.Serial)
 
 	options := serial.OpenOptions{
 		PortName:              c.Serial,
@@ -47,23 +54,27 @@ func main() {
 	}
 
 	network := network.New(serial)
-
 	network.Flush()
 
-	servo, err := ax.New(network, 1)
+	servos := make(map[string]*servo.Servo)
 
-	if err != nil {
-		fmt.Printf("servo init error: %s\n", err)
-		os.Exit(1)
+	for _, s := range c.Servos {
+		fmt.Printf("Adding %s\n", s.Path)
+		newServo, err := ax.New(network, s.ServoID)
+		newServo.SetReturnLevel(c.StatusReturnLevel)
+		if err != nil {
+			fmt.Printf("Servo init error: %s\n", err)
+			os.Exit(1)
+		}
+		err = newServo.Ping()
+		if err != nil {
+			fmt.Printf("Ping error: %s\n", err)
+		}
+		path := strings.Replace(s.Path, "/", "", 1)
+		servos[path] = newServo
 	}
 
-	err = servo.Ping()
-	if err != nil {
-		fmt.Printf("ping error: %s\n", err)
-		os.Exit(1)
-	}
-
-	addr := "127.0.0.1:8765"
+	addr := "0.0.0.0:8765"
 	server := &osc.Server{}
 	conn, err := net.ListenPacket("udp", addr)
 	if err != nil {
@@ -89,18 +100,21 @@ func main() {
 				case *osc.Message:
 					s := strings.Split(fmt.Sprint(packet.(*osc.Message)), ",")
 					message := strings.Split(s[0], "/")
-					fmt.Print(message[2])
 
 					data := strings.Split(s[1], " ")
 
 					for i := 1; i < len(data); i++ {
 						if data[0][i-1] == 'f' {
 							f, _ := strconv.ParseFloat(data[i], 32)
-							fmt.Println(int(f * 1024))
-							err = servo.SetGoalPosition(int(f * 1023))
-							if err != nil {
-								fmt.Printf("move error: %s\n", err)
-								os.Exit(1)
+							se := servos[strings.ReplaceAll(message[2], " ", "")]
+							if se != nil {
+
+								err := se.SetGoalPosition(int(f * 1023))
+								if err != nil {
+									fmt.Printf("move error: %s\n", err)
+									os.Exit(1)
+
+								}
 							}
 
 						}
@@ -131,6 +145,10 @@ func main() {
 		}
 
 		if c == 'q' {
+			fmt.Printf("Setting Status return Level: 2")
+			for _, s := range servos {
+				s.SetReturnLevel(2)
+			}
 			os.Exit(0)
 		}
 	}
